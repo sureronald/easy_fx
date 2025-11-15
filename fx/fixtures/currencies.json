@@ -1,0 +1,62 @@
+[
+  {
+    "model": "fx.currency",
+    "pk": "NGN",
+    "fields": {
+      "name": "Nigerian Naira",
+      "symbol": "₦",
+      "decimal_places": 2,
+      "symbol_position": "before",
+      "thousands_separator": ",",
+      "decimal_separator": ".",
+      "active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.currency",
+    "pk": "EUR",
+    "fields": {
+      "name": "Euro",
+      "symbol": "€",
+      "decimal_places": 2,
+      "symbol_position": "before",
+      "thousands_separator": ",",
+      "decimal_separator": ".",
+      "active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.currency",
+    "pk": "KES",
+    "fields": {
+      "name": "Kenyan Shilling",
+      "symbol": "KSh",
+      "decimal_places": 2,
+      "symbol_position": "before",
+      "thousands_separator": ",",
+      "decimal_separator": ".",
+      "active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.currency",
+    "pk": "USD",
+    "fields": {
+      "name": "US Dollar",
+      "symbol": "$",
+      "decimal_places": 2,
+      "symbol_position": "before",
+      "thousands_separator": ",",
+      "decimal_separator": ".",
+      "active": true,
+      "created_at": "2025-01-01T00:00:00Z",
+      "updated_at": "2025-01-01T00:00:00Z"
+    }
+  }
+]

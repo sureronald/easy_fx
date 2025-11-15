@@ -1,0 +1,134 @@
+[
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "EUR",
+      "target": "NGN",
+      "mean": "1679.196164",
+      "buying": "1670.800203",
+      "selling": "1687.592123",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "EUR",
+      "target": "KES",
+      "mean": "150.411993",
+      "buying": "149.659833",
+      "selling": "151.164153",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "EUR",
+      "target": "USD",
+      "mean": "1.163725",
+      "buying": "1.157906",
+      "selling": "1.169544",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "NGN",
+      "target": "EUR",
+      "mean": "0.000596",
+      "buying": "0.000593",
+      "selling": "0.000599",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "NGN",
+      "target": "KES",
+      "mean": "0.089567",
+      "buying": "0.089119",
+      "selling": "0.090015",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "NGN",
+      "target": "USD",
+      "mean": "0.000693",
+      "buying": "0.000689",
+      "selling": "0.000697",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "KES",
+      "target": "EUR",
+      "mean": "0.006650",
+      "buying": "0.006617",
+      "selling": "0.006683",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "KES",
+      "target": "NGN",
+      "mean": "11.166079",
+      "buying": "11.110249",
+      "selling": "11.221909",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "KES",
+      "target": "USD",
+      "mean": "0.007738",
+      "buying": "0.007699",
+      "selling": "0.007777",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "USD",
+      "target": "EUR",
+      "mean": "0.859325",
+      "buying": "0.855029",
+      "selling": "0.863621",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "USD",
+      "target": "NGN",
+      "mean": "1443.100000",
+      "buying": "1436.885000",
+      "selling": "1449.315000",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "fx.rate",
+    "fields": {
+      "source": "USD",
+      "target": "KES",
+      "mean": "129.250000",
+      "buying": "128.603750",
+      "selling": "129.896250",
+      "last_updated": "2025-01-01T00:00:00Z"
+    }
+  }
+]

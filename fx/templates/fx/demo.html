@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy FX - Currency Converter Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .currency-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .currency-info select {
+            flex: 1;
+        }
+
+        .currency-symbol {
+            font-size: 24px;
+            color: #667eea;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-amount {
+            font-size: 32px;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .result-details {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .result-link {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .result-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .result-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            background: #fee;
+            border-left: 4px solid #f44;
+            border-radius: 5px;
+            color: #c33;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💱 Easy FX</h1>
+        <p class="subtitle">Convert currencies instantly</p>
+
+        <form id="converterForm">
+            <div class="form-group">
+                <label for="source_currency">From</label>
+                <div class="currency-info">
+                    <span class="currency-symbol" id="sourceSymbol"></span>
+                    <select id="source_currency" name="source_currency" required>
+                        <option value="">Select currency...</option>
+                        {% for currency in currencies %}
+                        <option value="{{ currency.code }}" data-symbol="{{ currency.symbol }}">{{ currency.code }} - {{ currency.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input type="number" id="amount" name="amount" step="0.01" min="0.01" placeholder="Enter amount" required>
+            </div>
+
+            <div class="form-group">
+                <label for="target_currency">To</label>
+                <div class="currency-info">
+                    <span class="currency-symbol" id="targetSymbol"></span>
+                    <select id="target_currency" name="target_currency" required>
+                        <option value="">Select currency...</option>
+                        {% for currency in currencies %}
+                        <option value="{{ currency.code }}" data-symbol="{{ currency.symbol }}">{{ currency.code }} - {{ currency.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" id="convertBtn">Convert</button>
+        </form>
+
+        <div class="error" id="error"></div>
+
+        <div class="result" id="result">
+            <div class="result-amount" id="resultAmount"></div>
+            <div class="result-details" id="resultDetails"></div>
+            <div class="result-link">
+                <a href="#" id="quoteLink" target="_blank">View Quote Details →</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('converterForm');
+        const resultDiv = document.getElementById('result');
+        const errorDiv = document.getElementById('error');
+        const convertBtn = document.getElementById('convertBtn');
+        const sourceSelect = document.getElementById('source_currency');
+        const targetSelect = document.getElementById('target_currency');
+        const sourceSymbol = document.getElementById('sourceSymbol');
+        const targetSymbol = document.getElementById('targetSymbol');
+
+        // Update currency symbols when selection changes
+        sourceSelect.addEventListener('change', function() {
+            const option = this.options[this.selectedIndex];
+            sourceSymbol.textContent = option.dataset.symbol || '';
+        });
+
+        targetSelect.addEventListener('change', function() {
+            const option = this.options[this.selectedIndex];
+            targetSymbol.textContent = option.dataset.symbol || '';
+        });
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                source_currency: document.getElementById('source_currency').value,
+                target_currency: document.getElementById('target_currency').value,
+                amount: document.getElementById('amount').value
+            };
+
+            // Hide previous results/errors
+            resultDiv.classList.remove('show');
+            errorDiv.classList.remove('show');
+
+            // Show loading state
+            convertBtn.disabled = true;
+            convertBtn.innerHTML = '<span class="loading"></span>';
+
+            try {
+                const csrftoken = getCookie('csrftoken');
+                const response = await fetch('/fx/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': csrftoken
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Get symbols for display
+                    const sourceOption = sourceSelect.options[sourceSelect.selectedIndex];
+                    const targetOption = targetSelect.options[targetSelect.selectedIndex];
+                    const sourceSymbol = sourceOption.dataset.symbol;
+                    const targetSymbol = targetOption.dataset.symbol;
+
+                    // Display result
+                    document.getElementById('resultAmount').textContent =
+                        `${targetSymbol} ${parseFloat(data.result).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})}`;
+
+                    document.getElementById('resultDetails').innerHTML =
+                        `<strong>${sourceSymbol}${parseFloat(data.amount).toLocaleString('en-US', {minimumFractionDigits: 2})} ${data.source_currency.code}</strong> = ` +
+                        `<strong>${targetSymbol}${parseFloat(data.result).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 6})} ${data.target_currency.code}</strong><br>` +
+                        `Exchange rate: ${parseFloat(data.rate).toFixed(6)}<br>` +
+                        `Quote ID: ${data.quote_id}`;
+
+                    document.getElementById('quoteLink').href = `/fx/${data.quote_id}/`;
+
+                    resultDiv.classList.add('show');
+                } else {
+                    // Display error
+                    let errorMessage = 'An error occurred. Please try again.';
+                    if (data.__all__) {
+                        errorMessage = data.__all__[0];
+                    } else if (typeof data === 'object') {
+                        errorMessage = Object.values(data).flat().join(', ');
+                    }
+                    errorDiv.textContent = errorMessage;
+                    errorDiv.classList.add('show');
+                }
+            } catch (error) {
+                errorDiv.textContent = 'Network error. Please check your connection and try again.';
+                errorDiv.classList.add('show');
+            } finally {
+                // Reset button
+                convertBtn.disabled = false;
+                convertBtn.textContent = 'Convert';
+            }
+        });
+    </script>
+</body>
+</html>
