@@ -18,7 +18,7 @@ class QuoteViewSet(viewsets.ViewSet):
     def create(self, request):
         log_data = {
             'action': 'quote_create_request',
-            'ip_address': request.META.get('REMOTE_ADDR'),
+            'ip_address': request.META.get('REMOTE_ADDR'), # replace with django ipware
             'user_agent': request.META.get('HTTP_USER_AGENT'),
         }
 

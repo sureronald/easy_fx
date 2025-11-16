@@ -5,9 +5,9 @@ A Django-based currency conversion API with automated exchange rate updates, quo
 ## Setup and Running
 
 ### Prerequisites
-- Docker
-- Docker Compose
-- Make
+- docker
+- docker compose
+- make
 
 ### Initial Setup
 
@@ -29,6 +29,7 @@ A Django-based currency conversion API with automated exchange rate updates, quo
    - Start all services (web, db, redis, celery worker, celery beat, nginx)
    - Run database migrations
    - Load initial fixtures (currencies and exchange rates)
+   The app should be available on `http://localhost/fx`. Make sure port 80 is available.
 
 3. **Access the application:**
    - API: http://localhost/fx/
@@ -162,7 +163,7 @@ All operations are logged in JSON format for easy ingestion by ELK stack:
      - [Open Exchange Rates](https://openexchangerates.org/) - 1000 requests/month free
 
 2. **No Request Caching:**
-   - Redis infrastructure is in place but not utilized for caching API responses
+   - Redis infrastructure is in place but not utilized for caching API responses or caching the rates and currencies to reduce database queries
    - Potential optimization: Cache external API responses with TTL to reduce API calls
    - Implementation suggestion: Use `django-redis` for view-level caching
 

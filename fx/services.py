@@ -9,7 +9,7 @@ from .models import Currency, Rate
 logger = logging.getLogger('fx')
 
 
-def should_refresh_rates():
+def should_refresh_rates() -> bool:
     """Check if rates need to be refreshed based on EXCHANGE_RATES_REFRESH setting."""
     refresh_interval = settings.EXCHANGE_RATES_REFRESH
 
@@ -23,7 +23,7 @@ def should_refresh_rates():
     return time_since_update >= refresh_interval
 
 
-def fetch_rates_for_currency(base_currency, target_currencies):
+def fetch_rates_for_currency(base_currency, target_currencies) -> dict:
     """
     Fetch exchange rates from the API for a given base currency.
 
@@ -121,7 +121,7 @@ def fetch_rates_for_currency(base_currency, target_currencies):
         return None
 
 
-def update_rates_for_currency(base_currency, rates_data):
+def update_rates_for_currency(base_currency, rates_data) -> None:
     """
     Update or create Rate objects from API response data.
 
@@ -179,7 +179,7 @@ def update_rates_for_currency(base_currency, rates_data):
     logger.info(json.dumps(log_data))
 
 
-def update_all_exchange_rates():
+def update_all_exchange_rates() -> None:
     """
     Update exchange rates for all active currencies.
     This is the main function called by the Celery task.
